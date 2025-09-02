@@ -1,0 +1,58 @@
+name: Design Tokens Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Check for changeset files
+        id: check-changeset
+        run: |
+          if ls .changeset/*.md 1> /dev/null 2>&1; then
+            echo "has-changeset=true" >> $GITHUB_OUTPUT
+          else
+            echo "has-changeset=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run changeset version
+        if: steps.check-changeset.outputs.has-changeset == 'true'
+        run: npx changeset version
+
+      - name: Install dependencies after version update
+        if: steps.check-changeset.outputs.has-changeset == 'true'
+        run: pnpm install
+
+      - name: Commit and push changes
+        if: steps.check-changeset.outputs.has-changeset == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "chore: update versions and changelogs" || exit 0
+          git push
+
+      - name: No changeset files found
+        if: steps.check-changeset.outputs.has-changeset == 'false'
+        run: echo "No changeset files found, skipping version update"
+
+
