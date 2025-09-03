@@ -33,6 +33,11 @@ jobs:
           else
             echo "has-changeset=false" >> $GITHUB_OUTPUT
           fi
+
+      - name: No changeset files found
+        if: steps.check-changeset.outputs.has-changeset == 'false'
+        run: echo "No changeset files found, skipping version update"
+
       - name: Run changeset version
         if: steps.check-changeset.outputs.has-changeset == 'true'
         run: npx changeset version
@@ -44,11 +49,9 @@ jobs:
       - name: Commit and push changes
         if: steps.check-changeset.outputs.has-changeset == 'true'
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          echo "Committing and pushing changes..."
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github'
           git add .
           git commit -m "chore: update versions and changelogs" || exit 0
           git push
-      - name: No changeset files found
-        if: steps.check-changeset.outputs.has-changeset == 'false'
-        run: echo "No changeset files found, skipping version update"
