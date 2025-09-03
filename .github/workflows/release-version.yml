@@ -40,7 +40,7 @@ jobs:
 
       - name: Run changeset version
         if: steps.check-changeset.outputs.has-changeset == 'true'
-        run: npx changeset version
+        run: npm run version-all
 
       - name: Install dependencies after version update
         if: steps.check-changeset.outputs.has-changeset == 'true'
