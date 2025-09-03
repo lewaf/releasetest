@@ -46,6 +46,13 @@ jobs:
         if: steps.check-changeset.outputs.has-changeset == 'true'
         run: pnpm install
 
+      - name: Get current version
+        if: steps.check-changeset.outputs.has-changeset == 'true'
+        id: get-version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
       - name: Commit and push changes
         if: steps.check-changeset.outputs.has-changeset == 'true'
         run: |
@@ -53,7 +60,7 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github'
           git add .
-          git commit -m "chore: update versions and changelogs" || exit 0
+          git commit -m "Release \"${{ steps.get-version.outputs.version }}\"" || exit 0
           git push
 
       - name: Merge release into main
@@ -61,5 +68,11 @@ jobs:
         run: |
           git fetch origin main
           git checkout main
-          git merge --no-ff ${{ github.ref_name }} --no-edit
+          git merge --no-ff ${{ github.ref_name }}
           git push origin main
+
+      - name: tagging
+        if: steps.check-changeset.outputs.has-changeset == 'true'
+        run: |
+          git tag -a -m "${{ steps.get-version.outputs.version }}" ${{ steps.get-version.outputs.version }}
+          git push origin ${{ steps.get-version.outputs.version }}
