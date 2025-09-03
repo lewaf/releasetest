@@ -1,11 +1,21 @@
 {
   "name": "releasetest",
-  "version": "1.0.0",
+  "version": "4.0.0",
   "description": "",
   "main": "index.js",
+  "workspaces": [
+    "packages/*"
+  ],
+  "private": false,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "changeset-version": "npx changeset version",
+    "sync-version": "node scripts/sync-version.js",
+    "version-all": "npm run changeset-version && npm run sync-version"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@changesets/cli": "^2.29.6"
+  }
 }
