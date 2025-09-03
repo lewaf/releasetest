@@ -60,7 +60,8 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github'
           git add .
-          git commit -m "Release \"${{ steps.get-version.outputs.version }}\"" || exit 0
+          VERSION="${{ steps.get-version.outputs.version }}"
+          git commit -m "Release \"$VERSION\"" || exit 0
           git push
 
       - name: Merge release into main
