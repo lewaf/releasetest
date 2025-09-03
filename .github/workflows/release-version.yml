@@ -69,8 +69,18 @@ jobs:
         run: |
           git fetch origin main
           git checkout main
+          git reset --hard -q origin/main
           git merge --no-ff ${{ github.ref_name }}
           git push origin main
+
+      - name: Merge release into develop
+        if: steps.check-changeset.outputs.has-changeset == 'true'
+        run: |
+          git fetch origin develop
+          git checkout develop
+          git reset --hard -q origin/develop
+          git merge --no-ff main
+          git push origin develop
 
       - name: tagging
         if: steps.check-changeset.outputs.has-changeset == 'true'
