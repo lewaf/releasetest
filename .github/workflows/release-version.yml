@@ -61,7 +61,7 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github'
           git add .
           VERSION="${{ steps.get-version.outputs.version }}"
-          git commit -m "\$VERSION\ release" || exit 0
+          git commit -m "$VERSION release" || exit 0
           git push
 
       - name: Merge release into main
