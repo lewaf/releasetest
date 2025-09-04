@@ -2,5 +2,8 @@
   "name": "@joody/module-b",
   "version": "5.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
 }
