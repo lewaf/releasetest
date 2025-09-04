@@ -1,5 +1,5 @@
 {
-  "name": "module-a",
+  "name": "@joody/module-a",
   "version": "4.1.0",
   "main": "index.js",
   "license": "MIT"
