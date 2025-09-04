@@ -3,4 +3,4 @@
 "@joody/module-b": minor
 ---
 
-test
+minor update

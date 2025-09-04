@@ -2,10 +2,8 @@
   "mode": "pre",
   "tag": "test",
   "initialVersions": {
-    "@joody/module-a": "5.0.1",
-    "@joody/module-b": "5.0.1"
+    "@joody/module-a": "5.1.0-test.0",
+    "@joody/module-b": "5.1.0-test.0"
   },
-  "changesets": [
-    "small-nights-joke"
-  ]
+  "changesets": []
 }
