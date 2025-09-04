@@ -60,13 +60,13 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github'
           git add .
-          VERSION="${{ steps.get-version.outputs.version }}"
-          git commit -m "$VERSION release" || exit 0
+          git commit -m "Version value updating" || exit 0
           git push
 
       - name: Merge release into main
         if: steps.check-changeset.outputs.has-changeset == 'true'
         run: |
+          VERSION="${{ steps.get-version.outputs.version }}"
           git fetch origin main
           git checkout main
           git reset --hard -q origin/main
@@ -88,3 +88,9 @@ jobs:
         run: |
           git tag -a -m "${{ steps.get-version.outputs.version }}" ${{ steps.get-version.outputs.version }}
           git push origin ${{ steps.get-version.outputs.version }}
+
+      - name: Publish packages
+        if: steps.check-changeset.outputs.has-changeset == 'true'
+        run: |
+         echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+         npx changeset publish

@@ -1,3 +1,3 @@
 module.exports = function() {
-  return 'Hello from moduleA!';
+  console.log("Hello from moduleA!");
 };
