@@ -57,7 +57,7 @@ jobs:
         if: steps.check-changeset.outputs.has-changeset == 'true'
         run: |
          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-         npx changeset publish --tag test
+         npx changeset publish
 
       - name: Commit and push changes
         if: steps.check-changeset.outputs.has-changeset == 'true'
