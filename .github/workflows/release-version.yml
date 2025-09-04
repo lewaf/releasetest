@@ -15,7 +15,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -53,6 +53,12 @@ jobs:
           VERSION=$(node -p "require('./package.json').version")
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
+      - name: Publish packages
+        if: steps.check-changeset.outputs.has-changeset == 'true'
+        run: |
+         echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+         npx changeset publish --tag test
+
       - name: Commit and push changes
         if: steps.check-changeset.outputs.has-changeset == 'true'
         run: |
@@ -74,6 +80,12 @@ jobs:
           git commit --amend -m "$VERSION release"
           git push origin main
 
+      - name: tagging
+        if: steps.check-changeset.outputs.has-changeset == 'true'
+        run: |
+          git tag -a -m "${{ steps.get-version.outputs.version }}" ${{ steps.get-version.outputs.version }}
+          git push origin ${{ steps.get-version.outputs.version }}
+
       - name: Merge release into develop
         if: steps.check-changeset.outputs.has-changeset == 'true'
         run: |
@@ -82,15 +94,3 @@ jobs:
           git reset --hard -q origin/develop
           git merge --no-ff main
           git push origin develop
-
-      - name: tagging
-        if: steps.check-changeset.outputs.has-changeset == 'true'
-        run: |
-          git tag -a -m "${{ steps.get-version.outputs.version }}" ${{ steps.get-version.outputs.version }}
-          git push origin ${{ steps.get-version.outputs.version }}
-
-      - name: Publish packages
-        if: steps.check-changeset.outputs.has-changeset == 'true'
-        run: |
-         echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-         npx changeset publish
