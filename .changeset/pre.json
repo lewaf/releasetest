@@ -5,5 +5,7 @@
     "@joody/module-a": "5.0.1",
     "@joody/module-b": "5.0.1"
   },
-  "changesets": []
+  "changesets": [
+    "small-nights-joke"
+  ]
 }
