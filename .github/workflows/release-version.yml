@@ -41,7 +41,7 @@ jobs:
         run: pnpm install
 
       - name: Run changeset version
-        run: npm run version-all
+        run: npm run version
 
       - name: Install dependencies after version update
         run: pnpm install
