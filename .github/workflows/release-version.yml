@@ -41,7 +41,7 @@ jobs:
         run: pnpm install
 
       - name: Run changeset version
-        run: npm run version-all
+        run: npm run version
 
       - name: Install dependencies after version update
         run: pnpm install
@@ -88,3 +88,7 @@ jobs:
           git reset --hard -q origin/develop
           git merge --no-ff main
           git push origin develop
+
+      - name: Delete release branch
+        run: |
+          git push origin --delete ${{ github.ref_name }}
