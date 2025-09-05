@@ -1,6 +1,6 @@
 {
   "name": "@joody/module-a",
-  "version": "6.2.0",
+  "version": "6.3.0",
   "main": "index.js",
   "license": "MIT",
   "publishConfig": {
