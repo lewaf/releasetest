@@ -77,7 +77,8 @@ jobs:
           git fetch origin main
           git checkout main
           git reset --hard -q origin/main
-          git merge --no-ff -m "$VERSION release" ${{ github.ref_name }}
+          git merge --no-ff ${{ github.ref_name }}
+          git commit --amend -m "$VERSION release"
           git push origin main
 
       - name: tagging
