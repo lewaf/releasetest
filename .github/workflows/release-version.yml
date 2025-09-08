@@ -2,6 +2,11 @@ name: Design Tokens Release
 
 on:
   workflow_dispatch:
+    inputs:
+      releaseTag:
+        description: 'npm publish tag (ex: latest, next)'
+        required: false
+        default: 'latest'
 
 jobs:
   version:
@@ -55,7 +60,7 @@ jobs:
       - name: Publish packages
         run: |
          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-         npx changeset publish
+         npx changeset publish --tag ${{ github.event.inputs.releaseTag }}
 
       - name: Commit and push changes
         run: |
