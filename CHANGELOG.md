@@ -2,6 +2,10 @@
 
 The following is a curated list of changes in the core tokens module, newest changes on the top.
 
+## [6.5.0]
+
+- Add GP1 tokens
+
 ## [6.4.0]
 
 - No significant changes
