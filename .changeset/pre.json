@@ -1,0 +1,9 @@
+{
+  "mode": "pre",
+  "tag": "test",
+  "initialVersions": {
+    "@joody/module-a": "6.5.0",
+    "@joody/module-b": "6.5.0"
+  },
+  "changesets": []
+}
