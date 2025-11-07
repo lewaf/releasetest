@@ -1,3 +1,3 @@
 module.exports = function() {
-  console.log("Hello from moduleA!");
+  console.log("Hello from moduleA! version 6.5.1");
 };
