@@ -70,11 +70,11 @@ jobs:
       - name: Merge release into main
         run: |
           VERSION="${{ steps.get-version.outputs.version }}"
-          git fetch origin main
-          git checkout main
-          git reset --hard -q origin/main
+          git fetch origin test/main
+          git checkout test/main
+          git reset --hard -q origin/test/main
           git merge --no-ff -m "$VERSION release" ${{ github.ref_name }}
-          git push origin main
+          git push origin test/main
 
       - name: tagging
         run: |
@@ -83,11 +83,11 @@ jobs:
 
       - name: Merge release into develop
         run: |
-          git fetch origin develop
-          git checkout develop
-          git reset --hard -q origin/develop
-          git merge --no-ff main
-          git push origin develop
+          git fetch origin test/develop
+          git checkout test/develop
+          git reset --hard -q origin/test/develop
+          git merge --no-ff test/main
+          git push origin test/develop
 
       - name: Delete release branch
         run: |
