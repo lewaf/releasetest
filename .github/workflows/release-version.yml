@@ -53,11 +53,6 @@ jobs:
           VERSION=$(node -p "require('./package.json').version")
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-      - name: Publish packages
-        run: npx changeset publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: Commit and push changes
         run: |
           echo "Committing and pushing changes..."
@@ -70,11 +65,11 @@ jobs:
       - name: Merge release into main
         run: |
           VERSION="${{ steps.get-version.outputs.version }}"
-          git fetch origin main
-          git checkout main
-          git reset --hard -q origin/main
-          git merge --no-ff -m "$VERSION release" ${{ github.ref_name }}
-          git push origin main
+          git fetch origin ${{ github.event.repository.default_branch }}
+          git checkout ${{ github.event.repository.default_branch }}
+          git reset --hard -q origin/${{ github.event.repository.default_branch }}
+          git merge --no-ff -m "${{github.repository}} $VERSION release" ${{ github.ref_name }}
+          git push origin ${{ github.event.repository.default_branch }}
 
       - name: tagging
         run: |
@@ -86,9 +81,16 @@ jobs:
           git fetch origin develop
           git checkout develop
           git reset --hard -q origin/develop
-          git merge --no-ff main
+          git merge --no-ff ${{ github.event.repository.default_branch }}
           git push origin develop
 
       - name: Delete release branch
         run: |
           git push origin --delete ${{ github.ref_name }}
+
+      - name: Publish packages
+        run: |
+          git checkout ${{ github.event.repository.default_branch }}
+          npx changeset publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
