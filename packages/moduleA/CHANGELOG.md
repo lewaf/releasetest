@@ -2,6 +2,10 @@
 
 The following is a curated list of changes in the core tokens module, newest changes on the top.
 
+## [7.0.1]
+
+- No significant changes
+
 ## [7.0.0]
 
 - No significant changes
