@@ -1,6 +1,6 @@
 {
   "name": "@joody/module-b",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "main": "index.js",
   "license": "MIT"
 }
