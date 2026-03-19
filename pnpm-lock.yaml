@@ -12,6 +12,14 @@ importers:
         specifier: ^2.29.6
         version: 2.29.6
 
+  packages/moduleA: {}
+
+  packages/moduleB:
+    dependencies:
+      '@joody/module-a':
+        specifier: workspace:*
+        version: link:../moduleA
+
 packages:
 
   '@babel/runtime@7.28.3':
