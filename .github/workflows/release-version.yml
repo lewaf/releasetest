@@ -49,7 +49,7 @@ jobs:
         run: pnpm run version
 
       - name: Install dependencies after version update
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install
 
       - name: Get current version
         id: get-version
