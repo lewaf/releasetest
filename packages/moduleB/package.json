@@ -2,5 +2,8 @@
   "name": "@joody/module-b",
   "version": "7.0.1",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@joody/module-a": "7.0.1"
+  }
 }
