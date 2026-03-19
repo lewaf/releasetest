@@ -17,8 +17,8 @@ importers:
   packages/moduleB:
     dependencies:
       '@joody/module-a':
-        specifier: 7.0.1
-        version: 7.0.1
+        specifier: workspace:*
+        version: link:../moduleA
 
 packages:
 
@@ -89,9 +89,6 @@ packages:
     peerDependenciesMeta:
       '@types/node':
         optional: true
-
-  '@joody/module-a@7.0.1':
-    resolution: {integrity: sha512-fd1NXz5wxMFQimE2BkTLJOxRYBZ3YLAX4eqY/+WJTafEe59SpGok293dydYU3pxXq/+moiloYbg0iN519adziQ==}
 
   '@manypkg/find-root@1.1.0':
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
@@ -545,8 +542,6 @@ snapshots:
     dependencies:
       chardet: 2.1.0
       iconv-lite: 0.6.3
-
-  '@joody/module-a@7.0.1': {}
 
   '@manypkg/find-root@1.1.0':
     dependencies:
