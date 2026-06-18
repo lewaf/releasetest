@@ -1,9 +1,9 @@
 {
   "name": "@joody/module-b",
-  "version": "7.4.0",
+  "version": "7.5.0",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@joody/module-a": "^7.4.0"
+    "@joody/module-a": "workspace:*"
   }
 }
