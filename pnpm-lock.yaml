@@ -17,7 +17,7 @@ importers:
   packages/moduleB:
     dependencies:
       '@joody/module-a':
-        specifier: ^7.4.0
+        specifier: workspace:*
         version: link:../moduleA
 
 packages:
